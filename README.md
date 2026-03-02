@@ -1,50 +1,83 @@
-# AI-ZiMo Plugin
+# yunhe-skills
 
-## Skills
+A curated collection of practical OpenClaw skills maintained by **yunhe-dev**.
 
-This plugin includes the following specialized skills:
+This repository currently focuses on image-generation workflows and X (Twitter) content assets.
 
-### Apple Development Skills
-- **apple-development-skills:app-store-submission** - Generate App Store submission materials including promotional text, description, and keywords. Supports bilingual submissions (Chinese/English) and ensures compliance with Apple's character limits and guidelines.
-- **apple-development-skills:privacy-policy-generator** - Generate comprehensive, legally-compliant privacy policies for applications. Supports automated codebase scanning and interactive questionnaires with GDPR/CCPA compliance addendums.
+---
 
-### Convex Skills
-Comprehensive skills for Convex backend development:
+## Included Skills
 
-#### Core Convex Skills
-- **convex-skills:convex-queries** - Building and optimizing Convex queries
-- **convex-skills:convex-mutations** - Creating and managing Convex mutations
-- **convex-skills:convex-actions-general** - General Convex actions development
+### 1) `nano-banana-blt`
+Generate images with the BLT-compatible Nano Banana endpoint.
 
-#### Convex Agents Skills
-- **convex-skills:convex-agents-fundamentals** - Core concepts and fundamentals of Convex agents
-- **convex-skills:convex-agents-messages** - Message handling in Convex agents
-- **convex-skills:convex-agents-threads** - Thread management for Convex agents
-- **convex-skills:convex-agents-tools** - Tool integration and usage in Convex agents
-- **convex-skills:convex-agents-context** - Context management for Convex agents
-- **convex-skills:convex-agents-rag** - RAG (Retrieval-Augmented Generation) implementation
-- **convex-skills:convex-agents-workflows** - Workflow orchestration in Convex agents
-- **convex-skills:convex-agents-rate-limiting** - Rate limiting strategies for Convex agents
-- **convex-skills:convex-agents-streaming** - Streaming responses in Convex agents
-- **convex-skills:convex-agents-files** - File handling in Convex agents
-- **convex-skills:convex-agents-human-agents** - Human-in-the-loop agent patterns
-- **convex-skills:convex-agents-usage-tracking** - Usage tracking and analytics
-- **convex-skills:convex-agents-debugging** - Debugging techniques for Convex agents
-- **convex-skills:convex-agents-playground** - Testing and experimentation environment
+**What it supports**
+- Text-to-image
+- Multiple aspect ratios (`1:1`, `16:9`, `21:9`, etc.)
+- Multiple sizes (`1K`, `2K`, `4K`, `512px`)
+- Sync mode and async mode with task polling
+- Optional reference images
 
-## Installation
+**Main script**
+- `skills/nano-banana-blt/scripts/generate_image.py`
 
-Install the plugin in Claude Code:
+---
+
+### 2) `Openclaw-X-article-cover-generator`
+Generate OpenClaw-themed X article cover images with a fixed composition.
+
+**Composition rules**
+- Lobster logo subject on the **right 1/4**
+- Text area on the **left 3/4**
+- Keep the lobster subject identity consistent with the reference image
+- If user asks for 5:2, use **21:9** as the nearest supported ratio
+
+**Main script**
+- `skills/Openclaw-X-article-cover-generator/scripts/generate_cover.py`
+
+---
+
+## Requirements
+
+- Python 3.10+
+- `uv` (recommended runner)
+- Valid API keys in environment variables
+
+Example env vars:
 
 ```bash
-claude
-/plugin marketplace add AI-ZiMo/aizimo-plugin
+export BLT_API_KEY="your-key"
 ```
 
-## Enable Plugin
+---
 
-Remember to enable the plugin after installation.
+## Quick Start
 
-## Debugging
+### Test `nano-banana-blt`
 
-If you cannot use the skill even after installing the plugin, run `claude --debug` to check whether the skills are loaded from the plugin through looking at the debug logs.
+```bash
+uv run ./skills/nano-banana-blt/scripts/generate_image.py \
+  --prompt "A futuristic city skyline at sunset" \
+  --ratio 16:9 \
+  --size 2K \
+  --output demo.png
+```
+
+### Test `Openclaw-X-article-cover-generator`
+
+```bash
+uv run ./skills/Openclaw-X-article-cover-generator/scripts/generate_cover.py \
+  --title "Zero-Threshold OpenClaw" \
+  --reference "https://example.com/reference.jpg" \
+  --output x-cover.png \
+  --size 2K \
+  --async-mode
+```
+
+---
+
+## Notes
+
+- This repo is actively evolving.
+- Skill docs are in each skill folder (`SKILL.md`).
+- If a packaged release misses binary assets, prefer URL-based references for reproducibility.
