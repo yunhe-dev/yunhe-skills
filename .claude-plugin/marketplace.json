@@ -20,28 +20,13 @@
         ]
       },
       {
-        "name": "convex-skills",
-        "description": "Skills for Convex backend development",
+        "name": "content-generation-skills",
+        "description": "Skills for content generation",
         "source": "./",
         "strict": false,
         "skills": [
-          "./skills/convex-skills/convex-queries",
-          "./skills/convex-skills/convex-mutations",
-          "./skills/convex-skills/convex-actions-general",
-          "./skills/convex-skills/convex-agents-fundamentals",
-          "./skills/convex-skills/convex-agents-messages",
-          "./skills/convex-skills/convex-agents-threads",
-          "./skills/convex-skills/convex-agents-tools",
-          "./skills/convex-skills/convex-agents-context",
-          "./skills/convex-skills/convex-agents-rag",
-          "./skills/convex-skills/convex-agents-workflows",
-          "./skills/convex-skills/convex-agents-rate-limiting",
-          "./skills/convex-skills/convex-agents-streaming",
-          "./skills/convex-skills/convex-agents-files",
-          "./skills/convex-skills/convex-agents-human-agents",
-          "./skills/convex-skills/convex-agents-usage-tracking",
-          "./skills/convex-skills/convex-agents-debugging",
-          "./skills/convex-skills/convex-agents-playground"
+          "./skills/nano-banana-blt",
+          "./skills/Openclaw-X-article-cover-generator"
         ]
       }
     ]
