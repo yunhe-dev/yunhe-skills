@@ -29,6 +29,28 @@ description: Generate OpenClaw-themed X (Twitter) article cover images with fixe
 - API Base URL：`https://api.bltcy.ai`
 - 模型：`gemini-3.1-flash-image-preview`
 
+## 环境配置
+
+支持通过 `.env` 文件配置 API key：
+
+**加载优先级**（高→低）：
+1. 命令行参数 `--api-key`
+2. 系统环境变量 `BLT_API_KEY`
+3. 项目级配置 `<cwd>/.yunhe-skills/.env`
+4. 用户级配置 `~/.yunhe-skills/.env`
+
+**配置方法**：
+
+```bash
+# 用户级配置（推荐，一次配置全局可用）
+mkdir -p ~/.yunhe-skills
+echo "BLT_API_KEY=your-api-key" > ~/.yunhe-skills/.env
+
+# 项目级配置
+mkdir -p .yunhe-skills
+echo "BLT_API_KEY=your-api-key" > .yunhe-skills/.env
+```
+
 ## 用法
 
 ```bash

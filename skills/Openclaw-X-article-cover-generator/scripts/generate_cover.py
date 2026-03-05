@@ -16,6 +16,48 @@ BASE_URL = "https://api.bltcy.ai/v1"
 MODEL = "gemini-3.1-flash-image-preview"
 
 
+def _load_env_file(env_path: Path) -> dict[str, str]:
+    """加载单个 .env 文件"""
+    env = {}
+    if not env_path.exists():
+        return env
+    content = env_path.read_text(encoding="utf-8")
+    for line in content.split("\n"):
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key = key.strip()
+        value = value.strip()
+        if (value.startswith('"') and value.endswith('"')) or \
+           (value.startswith("'") and value.endswith("'")):
+            value = value[1:-1]
+        env[key] = value
+    return env
+
+
+def _load_env() -> None:
+    """加载环境变量，优先级：系统环境变量 > 项目级 > 用户级"""
+    home = Path.home()
+    cwd = Path.cwd()
+
+    # 用户级：~/.yunhe-skills/.env
+    home_env = _load_env_file(home / ".yunhe-skills" / ".env")
+    # 项目级：<cwd>/.yunhe-skills/.env
+    cwd_env = _load_env_file(cwd / ".yunhe-skills" / ".env")
+
+    # 先加载用户级（低优先级）
+    for k, v in home_env.items():
+        if k not in os.environ:
+            os.environ[k] = v
+    # 再加载项目级（高优先级）
+    for k, v in cwd_env.items():
+        if k not in os.environ:
+            os.environ[k] = v
+
+
 def b64_data_uri(path: str) -> str:
     p = Path(path)
     if not p.exists():
@@ -98,6 +140,7 @@ def main():
         print("Error: title is required", file=sys.stderr)
         sys.exit(1)
 
+    _load_env()  # 加载 .env 文件
     api_key = args.api_key or os.environ.get("BLT_API_KEY")
     if not api_key:
         print("Error: BLT_API_KEY not found", file=sys.stderr)

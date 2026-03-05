@@ -22,6 +22,28 @@ Set your API key:
 export BLT_API_KEY="your-api-key-here"
 ```
 
+## 环境配置
+
+支持通过 `.env` 文件配置 API key：
+
+**加载优先级**（高→低）：
+1. 命令行参数 `--api-key`
+2. 系统环境变量 `BLT_API_KEY`
+3. 项目级配置 `<cwd>/.yunhe-skills/.env`
+4. 用户级配置 `~/.yunhe-skills/.env`
+
+**配置方法**：
+
+```bash
+# 用户级配置（推荐，一次配置全局可用）
+mkdir -p ~/.yunhe-skills
+echo "BLT_API_KEY=your-api-key" > ~/.yunhe-skills/.env
+
+# 项目级配置
+mkdir -p .yunhe-skills
+echo "BLT_API_KEY=your-api-key" > .yunhe-skills/.env
+```
+
 ## Usage
 
 ### Quick Generate (Sync)
@@ -131,21 +153,6 @@ Common errors and solutions:
 | `Invalid aspect ratio` | Use one of the supported ratios (see above) |
 | `Task failed` | Check task status with `--check-task TASK_ID` |
 | `Rate limited` | Use async mode or wait before retrying |
-
-## OpenClaw 封面图规则（你刚指定的）
-
-当用户要做 OpenClaw/龙虾 Logo 封面图时，遵循以下强约束：
-
-1. **必须先拿到标题文案再生成**
-   - 如果用户没有给文字标题：**不要生成**，先追问标题。
-2. **构图固定**
-   - 龙虾 logo 主体放在画面**右侧 1/4**区域。
-   - 文字区域占据画面**左侧 3/4**。
-   - 保持参考图里的龙虾 logo 主体形象不变（不改造型）。
-3. **比例要求**
-   - 用户要求 5:2 时，API 不支持 5:2，使用 **21:9** 作为最接近替代并提示用户。
-4. **建议提示词模板（可直接改标题后使用）**
-   - `按参考图风格生成 OpenClaw 封面图。保持龙虾 logo 主体形象不变，logo 位于画面右侧 1/4。左侧 3/4 预留清晰文字区，放置标题："<标题文本>"。整体科技感、深色背景、高对比、干净留白、可读性强。`
 
 ## API Reference
 

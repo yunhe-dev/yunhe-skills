@@ -1,34 +1,55 @@
 {
-    "name": "aizimo-plugin",
-    "owner": {
-      "name": "AI Zimo",
-      "email": "2876253980@qq.com"
+  "name": "yunhe-skills",
+  "owner": {
+    "name": "yunhe-dev",
+    "email": "dev@yunhe.ai"
+  },
+  "metadata": {
+    "description": "Content creation and publishing skills for AI workflows",
+    "version": "2.0.0"
+  },
+  "plugins": [
+    {
+      "name": "image-generation",
+      "description": "图像生成技能 - 支持文生图、封面图、插图、小红书图片等",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/nano-banana-blt",
+        "./skills/Openclaw-X-article-cover-generator",
+        "./skills/cover-image",
+        "./skills/article-illustrator",
+        "./skills/xhs-images"
+      ]
     },
-    "metadata": {
-      "description": "Aizimo plugin",
-      "version": "1.2.0"
+    {
+      "name": "content-publishing",
+      "description": "内容发布技能 - 支持微信公众号、X (Twitter) 等平台发布",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/post-to-wechat",
+        "./skills/post-to-x"
+      ]
     },
-    "plugins": [
-      {
-        "name": "apple-development-skills",
-        "description": "Skills for Apple app development and App Store submission",
-        "source": "./",
-        "strict": false,
-        "skills": [
-          "./skills/app-store-submission",
-          "./skills/privacy-policy-generator"
-        ]
-      },
-      {
-        "name": "content-generation-skills",
-        "description": "Skills for content generation",
-        "source": "./",
-        "strict": false,
-        "skills": [
-          "./skills/nano-banana-blt",
-          "./skills/Openclaw-X-article-cover-generator"
-        ]
-      }
-    ]
-  }
-  
+    {
+      "name": "utilities",
+      "description": "工具类技能 - 文件上传、存储等",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/oss-upload"
+      ]
+    },
+    {
+      "name": "apple-development",
+      "description": "Apple 开发技能 - App Store 提交、隐私政策生成",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/app-store-submission",
+        "./skills/privacy-policy-generator"
+      ]
+    }
+  ]
+}

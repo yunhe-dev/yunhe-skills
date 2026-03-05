@@ -25,10 +25,54 @@ from typing import Optional
 # Suppress SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+
+def _load_env_file(env_path: Path) -> dict[str, str]:
+    """加载单个 .env 文件"""
+    env = {}
+    if not env_path.exists():
+        return env
+    content = env_path.read_text(encoding="utf-8")
+    for line in content.split("\n"):
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key = key.strip()
+        value = value.strip()
+        if (value.startswith('"') and value.endswith('"')) or \
+           (value.startswith("'") and value.endswith("'")):
+            value = value[1:-1]
+        env[key] = value
+    return env
+
+
+def _load_env() -> None:
+    """加载环境变量，优先级：系统环境变量 > 项目级 > 用户级"""
+    home = Path.home()
+    cwd = Path.cwd()
+
+    # 用户级：~/.yunhe-skills/.env
+    home_env = _load_env_file(home / ".yunhe-skills" / ".env")
+    # 项目级：<cwd>/.yunhe-skills/.env
+    cwd_env = _load_env_file(cwd / ".yunhe-skills" / ".env")
+
+    # 先加载用户级（低优先级）
+    for k, v in home_env.items():
+        if k not in os.environ:
+            os.environ[k] = v
+    # 再加载项目级（高优先级）
+    for k, v in cwd_env.items():
+        if k not in os.environ:
+            os.environ[k] = v
+
+
 def get_api_key(provided_key: Optional[str]) -> Optional[str]:
     """Get API key from argument or environment."""
     if provided_key:
         return provided_key
+    _load_env()  # 加载 .env 文件
     return os.environ.get("BLT_API_KEY")
 
 def generate_filename(prompt: str) -> str:
